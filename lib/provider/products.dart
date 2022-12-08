@@ -49,9 +49,11 @@ class Products with ChangeNotifier {
   final userId;
   Products(this._item, this.token, this.userId);
 
-  Future<void> fetchAndPutData() async {
+  Future<void> fetchAndPutData({bool filterByUser = false}) async {
+    final filterUserProduct =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        ('https://shopapp-2fcdd-default-rtdb.firebaseio.com/Products.json?auth=$token');
+        ('https://shopapp-2fcdd-default-rtdb.firebaseio.com/Products.json?auth=$token&$filterUserProduct');
     print('.........................before get in products');
     print('token value is ..........:' + token);
     try {
@@ -123,6 +125,7 @@ class Products with ChangeNotifier {
             'price': userProduct.price,
             'imageurl': userProduct.imageUrl,
             // 'isfavorite': userProduct.isFavorite,
+            'creatorId': userId,
           },
         ),
       );

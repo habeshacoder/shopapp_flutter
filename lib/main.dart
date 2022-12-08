@@ -11,6 +11,7 @@ import 'package:expandedflexible/screens/edit_product_sreen.dart';
 import 'package:expandedflexible/screens/order_screen.dart';
 import 'package:expandedflexible/screens/product_detail_screen.dart';
 import 'package:expandedflexible/screens/products_overview_screen.dart';
+import 'package:expandedflexible/screens/splash_screen.dart';
 import 'package:expandedflexible/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +38,10 @@ class MyApp extends StatelessWidget {
           create: (context) => Cart(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          update: (context, auth, previous) =>
-              Orders(previous == null ? [] : previous.ordrslist, auth.token),
+          update: (context, auth, previous) => Orders(
+              previous == null ? [] : previous.ordrslist,
+              auth.token,
+              auth.userId),
         ),
       ],
       child: Consumer<Auth>(
@@ -46,12 +49,22 @@ class MyApp extends StatelessWidget {
           title: 'Flutter chat ui',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+                .copyWith(secondary: Colors.deepOrange),
           ),
           // home: ProductOverView(),
-          home: auth.isAuth ? ProductOverView() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductOverView()
+              : FutureBuilder(
+                  future: auth.tryAutoLogIn(),
+                  builder: (context, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : snapshot.data == false
+                              ? AuthScreen()
+                              : ProductOverView(),
+                ),
           routes: {
             CartScreen.routName: (context) => CartScreen(),
             ProductDetailScreen.routeName: (context) => ProductDetailScreen(),

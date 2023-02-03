@@ -1,4 +1,15 @@
-# expandedflexible
+full feature of production app is implemented .
+flutter ui
+firebase backend
+firebase authentication
+firebase realtime database using http package
+firebase cloud firestore
+firebase cloud messaging
+Api integration
+Autherization
+
+users can edit delete share thier product . users can only manuplate thier own data.
+users can also mark products as favorite.
 
 A new Flutter project.
 

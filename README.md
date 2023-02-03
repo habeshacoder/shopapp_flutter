@@ -1,4 +1,5 @@
-# expandedflexible
+# full production app.
+firebase all services and flutter ui
 
 A new Flutter project.
 

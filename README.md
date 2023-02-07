@@ -1,6 +1,6 @@
 # full production app.
 firebase all services and flutter ui
-
+you can clone and  practice with this project it includes almost all capabilities of a production app 
 output :
 
 ![3](https://user-images.githubusercontent.com/111964729/217343307-65f296f7-a7f5-4736-8270-29a294f68a3d.png)

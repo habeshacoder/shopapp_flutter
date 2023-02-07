@@ -1,7 +1,9 @@
 # full production app.
 firebase all services and flutter ui
 
-A new Flutter project.
+output :
+
+![3](https://user-images.githubusercontent.com/111964729/217343307-65f296f7-a7f5-4736-8270-29a294f68a3d.png)
 
 ## Getting Started
 

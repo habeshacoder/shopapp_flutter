@@ -1,10 +1,10 @@
 // import 'dart:html';
 
-import 'package:expandedflexible/provider/product.dart';
-import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/screens/edit_product_sreen.dart';
-import 'package:expandedflexible/widgets/app_drawer.dart';
-import 'package:expandedflexible/widgets/user_product_item.dart';
+import 'package:online_market/provider/product.dart';
+import 'package:online_market/provider/products.dart';
+import 'package:online_market/screens/edit_product_sreen.dart';
+import 'package:online_market/widgets/app_drawer.dart';
+import 'package:online_market/widgets/user_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

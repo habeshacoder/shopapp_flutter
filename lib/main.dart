@@ -1,56 +1,62 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unnecessary_null_comparison
 
-// import 'package:expandedflexible/screens/home_screen.dart';
-import 'package:expandedflexible/provider/auth.dart';
-import 'package:expandedflexible/provider/cart.dart';
-import 'package:expandedflexible/provider/orders.dart';
-import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/screens/auth_screen.dart';
-import 'package:expandedflexible/screens/cart_screen.dart';
-import 'package:expandedflexible/screens/edit_product_sreen.dart';
-import 'package:expandedflexible/screens/order_screen.dart';
-import 'package:expandedflexible/screens/product_detail_screen.dart';
-import 'package:expandedflexible/screens/products_overview_screen.dart';
-import 'package:expandedflexible/screens/user_products_screen.dart';
+// import 'package:online_market/screens/home_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:online_market/provider/auth.dart';
+import 'package:online_market/provider/cart.dart';
+import 'package:online_market/provider/orders.dart';
+import 'package:online_market/provider/products.dart';
+import 'package:online_market/screens/auth_screen.dart';
+import 'package:online_market/screens/cart_screen.dart';
+import 'package:online_market/screens/edit_product_sreen.dart';
+import 'package:online_market/screens/order_screen.dart';
+import 'package:online_market/screens/product_detail_screen.dart';
+import 'package:online_market/screens/products_overview_screen.dart';
+import 'package:online_market/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => Auth(),
-        ),
-        // ignore: missing_required_param
+        ChangeNotifierProvider(create: (context) => Auth()),
         ChangeNotifierProxyProvider<Auth, Products>(
-          update: (context, auth, previousproducts) => Products(
-              previousproducts == null ? [] : previousproducts.items,
-              auth.token,
-              auth.userId),
+          create: (context) => Products([], '', ''),
+          update: (context, auth, previousProducts) => Products(
+            previousProducts?.items ?? [],
+            auth.token,
+            auth.userId,
+          ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Cart(),
-        ),
+        ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          update: (context, auth, previous) =>
-              Orders(previous == null ? [] : previous.ordrslist, auth.token),
+          create: (context) => Orders([], ''),
+          update: (context, auth, previous) => Orders(
+            previous?.ordrslist ?? [],
+            auth.token,
+          ),
         ),
       ],
       child: Consumer<Auth>(
         builder: (context, auth, _) => MaterialApp(
-          title: 'Flutter chat ui',
+          title: 'Flutter Chat UI',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+                .copyWith(secondary: Colors.deepOrange),
           ),
-          // home: ProductOverView(),
           home: auth.isAuth ? ProductOverView() : AuthScreen(),
           routes: {
             CartScreen.routName: (context) => CartScreen(),

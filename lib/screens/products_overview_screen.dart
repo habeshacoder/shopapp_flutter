@@ -1,9 +1,8 @@
-import 'package:expandedflexible/provider/cart.dart';
-import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/screens/cart_screen.dart';
-import 'package:expandedflexible/widgets/app_drawer.dart';
-// import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/widgets/badge.dart';
+import 'package:online_market/provider/cart.dart';
+import 'package:online_market/provider/products.dart';
+import 'package:online_market/screens/cart_screen.dart';
+import 'package:online_market/widgets/app_drawer.dart';
+import 'package:online_market/widgets/badge.dart';
 import 'package:flutter/material.dart';
 import '../widgets/products_grid.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,8 @@ enum FilterOptions {
 }
 
 class ProductOverView extends StatefulWidget {
+  const ProductOverView({super.key});
+
   @override
   State<ProductOverView> createState() => _ProductOverViewState();
 }
@@ -42,7 +43,7 @@ class _ProductOverViewState extends State<ProductOverView> {
   Widget build(BuildContext context) {
     // Cart cart = Provider.of<Cart>(context);
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: const Text('my shop'),
         actions: [
@@ -60,28 +61,28 @@ class _ProductOverViewState extends State<ProductOverView> {
             itemBuilder: (context) {
               return [
                 const PopupMenuItem(
-                  child: Text('my favorites'),
                   value: FilterOptions.myfavorite,
+                  child: Text('my favorites'),
                 ),
                 const PopupMenuItem(
-                  child: Text('show all'),
                   value: FilterOptions.showall,
+                  child: Text('show all'),
                 ),
               ];
             },
           ),
-          Consumer<Cart>(
-            builder: (context, cart, _) => Badge(
+          Consumer<Cart>(builder: (context, cart, _) {
+            return BadgeWidget(
+              value: cart.itemcount.toString(),
+              color: Colors.red,
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(CartScreen.routName);
                 },
-                icon: Icon(Icons.shopping_cart),
+                icon: const Icon(Icons.shopping_cart),
               ),
-              value: cart.itemcount.toString(),
-              color: Colors.red,
-            ),
-          ),
+            );
+          }),
 
           // Badge(
           //   child: const IconButton(

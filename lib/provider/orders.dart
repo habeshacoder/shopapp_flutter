@@ -1,4 +1,4 @@
-import 'package:expandedflexible/provider/cart.dart';
+import 'package:online_market/provider/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -27,18 +27,14 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchOrders() async {
-    print('fetch order....................... in orders');
     final url =
         ('https://shopapp-2fcdd-default-rtdb.firebaseio.com/orders.json?auth=$token');
 
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final List<OrderItem> loadedOrders = [];
       final extractedOrders =
           json.decode(response.body) as Map<String, dynamic>;
-      if (extractedOrders == null) {
-        return;
-      }
       extractedOrders.forEach(
         (key, value) {
           loadedOrders.add(OrderItem(
@@ -58,7 +54,7 @@ class Orders with ChangeNotifier {
       _orders = loadedOrders;
       notifyListeners();
     } catch (error) {
-      throw (error);
+      rethrow;
     }
   }
 
@@ -67,7 +63,7 @@ class Orders with ChangeNotifier {
         ('https://shopapp-2fcdd-default-rtdb.firebaseio.com/orders.json?auth=$token');
     final datetime = DateTime.now();
 
-    final response = await http.post(url,
+    final response = await http.post(Uri.parse(url),
         body: json.encode({
           'amount': total,
           'datetime': datetime.toIso8601String(),

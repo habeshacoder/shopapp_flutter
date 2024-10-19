@@ -1,4 +1,4 @@
-import 'package:expandedflexible/provider/cart.dart';
+import 'package:online_market/provider/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,8 @@ class CardItem extends StatelessWidget {
   final double price;
   final int quantity;
   final String title;
-  CardItem({
+  const CardItem({
+    super.key,
     required this.productId,
     required this.id,
     required this.price,
@@ -23,19 +24,19 @@ class CardItem extends StatelessWidget {
         return showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('are you sure ?'),
-            content: Text('do you want to delete this cart ?'),
+            title: const Text('are you sure ?'),
+            content: const Text('do you want to delete this cart ?'),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('ok')),
+                  child: const Text('ok')),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text('cancel'),
+                child: const Text('cancel'),
               )
             ],
           ),
@@ -43,11 +44,6 @@ class CardItem extends StatelessWidget {
       },
       background: Container(
         color: Colors.red,
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-          size: 40,
-        ),
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -55,6 +51,11 @@ class CardItem extends StatelessWidget {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(
           right: 20,
+        ),
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 40,
         ),
       ),
       key: ValueKey(id),

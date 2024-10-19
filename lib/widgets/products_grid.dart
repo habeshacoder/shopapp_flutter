@@ -1,12 +1,12 @@
-// import 'package:expandedflexible/provider/product.dart';
-import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/widgets/product_item.dart';
+// import 'package:online_market/provider/product.dart';
+import 'package:online_market/provider/products.dart';
+import 'package:online_market/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsGrid extends StatelessWidget {
   final showOnlyFavorites;
-  ProductsGrid(this.showOnlyFavorites);
+  const ProductsGrid(this.showOnlyFavorites, {super.key});
   @override
   Widget build(BuildContext context) {
     final productsinstance = Provider.of<Products>(context);

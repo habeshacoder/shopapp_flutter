@@ -1,4 +1,4 @@
-import 'package:expandedflexible/provider/products.dart';
+import 'package:online_market/provider/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +8,8 @@ class ProductDetailScreen extends StatelessWidget {
   //   required this.titel,
   // });
   static String routeName = '/productDetailScreen';
+
+  const ProductDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final productid = ModalRoute.of(context)?.settings.arguments as String;
@@ -21,7 +23,7 @@ class ProductDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 200,
               width: double.infinity,
               child: Image(

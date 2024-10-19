@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:expandedflexible/provider/orders.dart' as om;
+import 'package:online_market/provider/orders.dart' as om;
 
 class OrderItem extends StatefulWidget {
   final om.OrderItem order;
   const OrderItem({
+    super.key,
     required this.order,
   });
 
@@ -35,7 +36,7 @@ class _OrderItemState extends State<OrderItem> {
             ),
           ),
           if (expanded)
-            Container(
+            SizedBox(
               height: min(widget.order.products.length * 20.0 + 100, 180),
               child: ListView(
                 children: widget.order.products
@@ -44,7 +45,7 @@ class _OrderItemState extends State<OrderItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(productitem.title),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             '${productitem.quantity} x  \$${productitem.price}',
                           )

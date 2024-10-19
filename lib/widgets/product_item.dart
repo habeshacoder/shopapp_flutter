@@ -1,40 +1,19 @@
-import 'package:expandedflexible/provider/auth.dart';
-import 'package:expandedflexible/provider/cart.dart';
-import 'package:expandedflexible/provider/product.dart';
-import 'package:expandedflexible/screens/product_detail_screen.dart';
+import 'package:online_market/provider/auth.dart';
+import 'package:online_market/provider/cart.dart';
+import 'package:online_market/provider/product.dart';
+import 'package:online_market/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-  // final String id;
-  // final String title;
-  // final String imageUrl;
+  const ProductItem({super.key});
 
-  // ProductItem({
-  //   required this.id,
-  //   required this.imageUrl,
-  //   required this.title,
-  // });
   @override
   Widget build(BuildContext context) {
-    // print('build method');135
-
     Product product = Provider.of<Product>(context);
     Cart cart = Provider.of<Cart>(context);
     Auth auth = Provider.of<Auth>(context, listen: false);
     return GridTile(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ProductDetailScreen.routeName,
-            arguments: product.id,
-          );
-        },
-        child: Image.network(
-          product.imageUrl,
-          fit: BoxFit.cover,
-        ),
-      ),
       footer: GridTileBar(
         leading: IconButton(
           onPressed: () {
@@ -68,7 +47,6 @@ class ProductItem extends StatelessWidget {
                 label: 'Undo',
                 onPressed: () {
                   cart.singlechilddeletion(product.id);
-                  print('SNACK BAR');
                 },
               ),
             );
@@ -80,6 +58,18 @@ class ProductItem extends StatelessWidget {
             Icons.shopping_cart,
             color: Colors.yellow,
           ),
+        ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            ProductDetailScreen.routeName,
+            arguments: product.id,
+          );
+        },
+        child: Image.network(
+          product.imageUrl,
+          fit: BoxFit.cover,
         ),
       ),
     );

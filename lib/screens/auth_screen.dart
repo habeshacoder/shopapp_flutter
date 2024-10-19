@@ -1,13 +1,15 @@
 import 'dart:math';
-import 'package:expandedflexible/model/httpexception.dart';
+import 'package:online_market/model/httpexception.dart';
 import 'package:provider/provider.dart';
-import 'package:expandedflexible/provider/auth.dart';
+import 'package:online_market/provider/auth.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
+
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,12 @@ class AuthScreen extends StatelessWidget {
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                stops: [0, 1],
+                stops: const [0, 1],
               ),
             ),
           ),
           SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
@@ -41,7 +43,8 @@ class AuthScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 20.0),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 94.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
@@ -58,19 +61,22 @@ class AuthScreen extends StatelessWidget {
                         ],
                       ),
                       child: const Text(
-                        'MyShop',
+                        'Login and Shop now',
                         style: TextStyle(
                           color: Colors.green,
-                          fontSize: 50,
+                          fontSize: 30,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: deviceSize.height * 0.05,
+                  ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
+                    child: const AuthCard(),
                   ),
                 ],
               ),
@@ -83,6 +89,8 @@ class AuthScreen extends StatelessWidget {
 }
 
 class AuthCard extends StatefulWidget {
+  const AuthCard({super.key});
+
   @override
   _AuthCardState createState() => _AuthCardState();
 }
@@ -90,7 +98,7 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {
+  final Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
@@ -101,14 +109,14 @@ class _AuthCardState extends State<AuthCard> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('an error occured'),
+          title: const Text('an error occured'),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('okay'),
+              child: const Text('okay'),
             )
           ],
         );
@@ -137,8 +145,6 @@ class _AuthCardState extends State<AuthCard> {
             .signUp(_authData['email']!, _authData['password']!);
       }
     } on HttpException catch (error) {
-      print(error);
-
       var errorMessage = 'authenticate faild';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'this email address is already in use';
@@ -157,8 +163,6 @@ class _AuthCardState extends State<AuthCard> {
       }
       showalert(errorMessage);
     } catch (error) {
-      print(error);
-
       const errorMessage = 'could not authenticate you .please try again';
       showalert(errorMessage);
     }
@@ -219,6 +223,7 @@ class _AuthCardState extends State<AuthCard> {
                     if (value!.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return null;
                   },
                   onSaved: (value) {
                     _authData['password'] = value!;
@@ -235,6 +240,7 @@ class _AuthCardState extends State<AuthCard> {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return null;
                           }
                         : null,
                   ),
@@ -245,8 +251,6 @@ class _AuthCardState extends State<AuthCard> {
                   const CircularProgressIndicator()
                 else
                   MaterialButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: () => _submit(),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -255,15 +259,17 @@ class _AuthCardState extends State<AuthCard> {
                         horizontal: 30.0, vertical: 8.0),
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.grey,
+                    child:
+                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                   ),
                 MaterialButton(
-                  child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
+                  child: Text(
+                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                 ),
               ],
             ),

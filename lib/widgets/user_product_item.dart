@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:expandedflexible/provider/products.dart';
-import 'package:expandedflexible/screens/edit_product_sreen.dart';
+import 'package:online_market/provider/products.dart';
+import 'package:online_market/screens/edit_product_sreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

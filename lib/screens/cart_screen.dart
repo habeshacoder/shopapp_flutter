@@ -1,11 +1,13 @@
-import 'package:expandedflexible/provider/cart.dart';
-import 'package:expandedflexible/provider/orders.dart';
-import 'package:expandedflexible/widgets/carditem.dart';
+import 'package:online_market/provider/cart.dart';
+import 'package:online_market/provider/orders.dart';
+import 'package:online_market/widgets/carditem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const routName = '/cart';
+
+  const CartScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final Cart cart = Provider.of<Cart>(context);
@@ -54,6 +56,7 @@ class CartScreen extends StatelessWidget {
 class orderButton extends StatefulWidget {
   final Cart cart;
   const orderButton({
+    super.key,
     required this.cart,
   });
 
@@ -72,8 +75,6 @@ class _orderButtonState extends State<orderButton> {
               setState(() {
                 isLoading = true;
               });
-              print(
-                  '....................ordder now button befor addorder method');
               await Provider.of<Orders>(
                 context,
                 listen: false,
@@ -81,15 +82,15 @@ class _orderButtonState extends State<orderButton> {
                 widget.cart.items.values.toList(),
                 widget.cart.totalAmount,
               );
-              print(
-                  '....................ordder now button after addorder method');
               setState(() {
                 isLoading = false;
               });
 
               widget.cart.clearItems();
             },
-      child: isLoading ? CircularProgressIndicator() : const Text('Order Now'),
+      child: isLoading
+          ? const CircularProgressIndicator()
+          : const Text('Order Now'),
     );
   }
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
-import 'package:expandedflexible/widgets/carditem.dart';
+import 'package:online_market/widgets/carditem.dart';
 import 'package:flutter/widgets.dart';
 
 class CartItem {
@@ -95,7 +95,6 @@ class Cart with ChangeNotifier {
 
   void clearItems() {
     _items = {};
-    print('inside cart now button');
     notifyListeners();
   }
 }

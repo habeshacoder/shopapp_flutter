@@ -1,6 +1,6 @@
 {
-    "name": "expandedflexible",
-    "short_name": "expandedflexible",
+    "name": "online_market",
+    "short_name": "online_market",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,11 +1,13 @@
-import 'package:expandedflexible/provider/product.dart';
-import 'package:expandedflexible/provider/products.dart';
+import 'package:online_market/provider/product.dart';
+import 'package:online_market/provider/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routName = '/editproductscreen';
+
+  const EditProductScreen({super.key});
 
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
@@ -37,7 +39,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (!imagefocus.hasFocus) {
       if ((!imagecontroller.text.startsWith('http') &&
               !imagecontroller.text.startsWith('https')) ||
-          (!imagecontroller.text!.endsWith('png') &&
+          (!imagecontroller.text.endsWith('png') &&
               !imagecontroller.text.endsWith('jpg') &&
               !imagecontroller.text.endsWith('jpeg'))) {
         return;
@@ -62,8 +64,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     //
     else {
       try {
-        print(
-            '...................from else befor add called..................');
         await Provider.of<Products>(context, listen: false).addProduct(product);
       } catch (erro) {
         await showDialog(
@@ -77,7 +77,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('okay'),
+                  child: const Text('okay'),
                 )
               ],
             );
@@ -110,17 +110,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
         return;
       }
       String proid = ModalRoute.of(context)!.settings.arguments as String;
-      if (proid != null) {
-        product = Provider.of<Products>(context).getById(proid);
+      product = Provider.of<Products>(context).getById(proid);
 
-        initvalue = {
-          'title': product.title,
-          'price': product.price,
-          'description': product.description,
-          'imageurl': '',
-        };
-        imagecontroller.text = product.imageUrl;
-      }
+      initvalue = {
+        'title': product.title,
+        'price': product.price,
+        'description': product.description,
+        'imageurl': '',
+      };
+      imagecontroller.text = product.imageUrl;
     }
     init = false;
     super.didChangeDependencies();
@@ -134,7 +132,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           onPressed: () {
             saveform();
           },
-          icon: Icon(Icons.save),
+          icon: const Icon(Icons.save),
         ),
       ],
       title: const Text('edit user product'),
